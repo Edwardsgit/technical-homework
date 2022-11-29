@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+  
+ <script>
+ loadDoc();
+ loader();
+ search() ;
+ 
+function loadDoc() {
+  const xhttp = new XMLHttpRequest();
+  xhttp.onload = function() {
+
+const createObjectFilter = keys => obj => keys.reduce((acc, key) => {
+  acc[key] = obj[key];
+  return acc;
+}, {});
+
+
+    var ob1 = JSON.parse(this.responseText);
+     
+     // filter by making use of the Objects key
+     const details = createObjectFilter([ 'name','location','avatar_url' ]);
+   
+      
+   console.log(details(ob1));
+
+  }
+  xhttp.open("GET", "https://api.github.com/users/changetocoding");
+  xhttp.send();
+}
+
+
+function search() {
+  const xhttp = new XMLHttpRequest();
+  xhttp.onload = function() {
+
+const createObjectFilter = keys => obj => keys.reduce((acc, key) => {
+  acc[key] = obj[key];
+  return acc;
+}, {});
+
+
+    var ob1 = JSON.parse(this.responseText);
+
+     // filter by making use of the Objects key
+     const details = createObjectFilter([ 'id' ]);
+ 
+
+ 
+
+ let filteredPeople = ob1.filter(function (currentElement) {
+  // the current value is an object, so you can check on its properties
+  return  currentElement.owner.login === "changetocoding" && currentElement.size > 6600
+ ;
+});
+
+ console.log(filteredPeople);
+  
+  
+  }
+  xhttp.open("GET", "https://api.github.com/users/changetocoding/repos");
+  xhttp.send();
+}
+
+
+function loader() {
+  const xhttp = new XMLHttpRequest();
+  xhttp.onload = function() {
+    var ob1 = JSON.parse(this.responseText);
+    
+    
+     // filter by making use of the Objects key
+    const result = ob1.map(({ name, description,size }) => {
+ return {name,   description,size  }; }); 
+ 
+  console.log(result);
+ 
+  
+  }
+  xhttp.open("GET", "https://api.github.com/users/changetocoding/repos");
+  xhttp.send();
+}
+
+</script>
+
+</body>
+</html>
